@@ -1,0 +1,561 @@
+[
+    {
+        "label": "request",
+        "importPath": "urllib",
+        "description": "urllib",
+        "isExtraImport": true,
+        "detail": "urllib",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "flash",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "mysql.connector",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mysql.connector",
+        "description": "mysql.connector",
+        "detail": "mysql.connector",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "CORS",
+        "importPath": "flask_cors",
+        "description": "flask_cors",
+        "isExtraImport": true,
+        "detail": "flask_cors",
+        "documentation": {}
+    },
+    {
+        "label": "MySQL",
+        "importPath": "flaskext.mysql",
+        "description": "flaskext.mysql",
+        "isExtraImport": true,
+        "detail": "flaskext.mysql",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "importPath": "flatted",
+        "description": "flatted",
+        "isExtraImport": true,
+        "detail": "flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "importPath": "flatted",
+        "description": "flatted",
+        "isExtraImport": true,
+        "detail": "flatted",
+        "documentation": {}
+    },
+    {
+        "label": "get_restaurant",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def get_restaurant(name):\n    try:\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        cursor.execute(\"SELECT restaurantName, streetAddress, zipCode, Email,phoneNumber, website, cuisineType FROM Restaurant WHERE restaurantName =%s\", (name,))\n        restRow = cursor.fetchone()\n        respone = jsonify(restRow)\n        respone.status_code = 200\n        return respone\n    except Exception as e:",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_cuisines",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def get_cuisines():\n    try:\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        cursor.execute(\"SELECT distinct cuisineType FROM Restaurant order by cuisineType asc\")\n        restRow = cursor.fetchall()\n        respone = jsonify(restRow)\n        respone.status_code = 200\n        return respone\n    except Exception as e:",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "find_restaurant",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def find_restaurant():\n    try:\n        zipCode = request.args.get(\"zipCode\")\n        cuisineType = request.args.get(\"cuisineType\")\n        print(cuisineType)\n        print(zipCode)        \n        if zipCode is None:\n            conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n            cursor = conn.cursor(prepared=True)\n            cursor.execute(\"SELECT restaurantName, streetAddress, zipCode, Email,phoneNumber, website, cuisineType, avg(rating) as 'avgRating' FROM Restaurant R left join Review V on R.restaurantId=V.restaurantId group by R.restaurantId having R.cuisineType =%s\", (cuisineType,))",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "delete_restaurant",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def delete_restaurant(name):\n\ttry:\n\t\tconn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n\t\tcursor = conn.cursor()\n\t\targs=(name,)\n\t\tcursor.callproc('delete_restaurant', args)\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "create_restaurant",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def create_restaurant():\n    try :\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        restaurant = request.get_json()\n        name = restaurant[\"restaurantName\"]\n        address = restaurant[\"streetAddress\"]\n        zip = restaurant[\"zipCode\"]\n        email = restaurant[\"Email\"]\n        phone = restaurant[\"phoneNumber\"]",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "update_restaurant",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def update_restaurant(name):\n    try :\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        print(\"step1\")\n        if request.is_json:\n            print(\"update restaurant\")\n            restaurant = request.get_json()\n            #name = restaurant[\"restaurantName\"]\n            address = restaurant[\"streetAddress\"]",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "create_user",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def create_user():\n    try :\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        user = request.get_json()\n        username = user[\"username\"]\n        firstname = user[\"firstname\"]\n        lastname = user[\"lastname\"]\n        email = user[\"email\"]\n        password = user[\"password\"]",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "get_user",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def get_user(username):\n    try:\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        cursor.execute(\"SELECT username, firstName, lastName, Email FROM User WHERE username = %s\", (username,))\n        restRow = cursor.fetchone()\n        respone = jsonify(restRow)\n        respone.status_code = 200\n        return respone\n    except Exception as e:",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "delete_user",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def delete_user(username):\n\ttry:\n\t\tconn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n\t\tcursor = conn.cursor()\n\t\targs=(username,)\n\t\tcursor.callproc('delete_user', args)\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "update_user",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def update_user(username):\n    try :\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        if request.is_json:\n            user = request.get_json()\n            fname = user[\"firstName\"]\n            lname = user[\"lastName\"]\n            email = user[\"email\"]\n            pw = user[\"password\"]",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "create_review",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def create_review():\n    try :\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        if request.is_json:\n            review = request.get_json()\n            username = review[\"username\"]\n            restaurantName = review[\"restaurantName\"]\n            rating = review[\"rating\"]\n            textReview = review[\"textReview\"]",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "find_reviews",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def find_reviews():\n    try:\n        username = request.args.get(\"username\")\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        cursor.execute(\"SELECT restaurantName, rating, textReview FROM Review RV join Restaurant R on RV.restaurantId=R.restaurantId WHERE username=%s;\", (username,))\n        restRow = cursor.fetchall()\n        respone = jsonify(restRow)\n        respone.status_code = 200\n        return respone",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "delete_review",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def delete_review(id):\n\ttry:\n\t\tconn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n\t\tcursor = conn.cursor(prepared=True)\n\t\tcursor.execute(\"DELETE FROM review WHERE reviewId =%s\", (id,))\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "update_review",
+        "kind": 2,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "def update_review(reviewId):\n    try :\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        if request.is_json:\n            review = request.get_json()\n            rating = review[\"rating\"]\n            textReview = review[\"textReview\"]\n            dateTime = review[\"dateTime\"]\n            sqlQuery = \"update review set rating = %s, textReview = %s, dateTime = %s where reviewId = %s;\"",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app, supports_credentials=True)\nif __name__ == \"__main__\":\n     app.run()\n@app.route(\"/restaurants/<string:name>\")\ndef get_restaurant(name):\n    try:\n        conn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n        cursor = conn.cursor(prepared=True)\n        cursor.execute(\"SELECT restaurantName, streetAddress, zipCode, Email,phoneNumber, website, cuisineType FROM Restaurant WHERE restaurantName =%s\", (name,))",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tconn",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\tconn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n\t\tcursor = conn.cursor()\n\t\targs=(name,)\n\t\tcursor.callproc('delete_restaurant', args)\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tcursor",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\tcursor = conn.cursor()\n\t\targs=(name,)\n\t\tcursor.callproc('delete_restaurant', args)\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\trespone",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:\n\t\tcursor.close() \n\t\tconn.close()\n@app.route(\"/restaurants\", methods = ['POST'])\ndef create_restaurant():",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\trespone.status_code",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:\n\t\tcursor.close() \n\t\tconn.close()\n@app.route(\"/restaurants\", methods = ['POST'])\ndef create_restaurant():\n    try :",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tconn",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\tconn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n\t\tcursor = conn.cursor()\n\t\targs=(username,)\n\t\tcursor.callproc('delete_user', args)\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tcursor",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\tcursor = conn.cursor()\n\t\targs=(username,)\n\t\tcursor.callproc('delete_user', args)\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\trespone",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:\n\t\tcursor.close() \n\t\tconn.close()\n@app.route(\"/users/<string:username>\", methods = ['PUT'])\ndef update_user(username):",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\trespone.status_code",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:\n\t\tcursor.close() \n\t\tconn.close()\n@app.route(\"/users/<string:username>\", methods = ['PUT'])\ndef update_user(username):\n    try :",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tconn",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\tconn = mysql.connector.connect(user='root', password='Neel1123!',host='127.0.0.1',database='project1CS348')\n\t\tcursor = conn.cursor(prepared=True)\n\t\tcursor.execute(\"DELETE FROM review WHERE reviewId =%s\", (id,))\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\tcursor",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\tcursor = conn.cursor(prepared=True)\n\t\tcursor.execute(\"DELETE FROM review WHERE reviewId =%s\", (id,))\n\t\tconn.commit()\n\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:\n\t\tcursor.close() ",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\trespone",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\trespone = jsonify('Success')\n\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:\n\t\tcursor.close() \n\t\tconn.close()\n@app.route(\"/review/update/<string:reviewId>\", methods = ['PUT'])\ndef update_review(reviewId):",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "\t\trespone.status_code",
+        "kind": 5,
+        "importPath": "cs348-project-backend.app",
+        "description": "cs348-project-backend.app",
+        "peekOfCode": "\t\trespone.status_code = 200\n\t\treturn respone\n\texcept Exception as e:\n\t\tprint(e)\n\tfinally:\n\t\tcursor.close() \n\t\tconn.close()\n@app.route(\"/review/update/<string:reviewId>\", methods = ['PUT'])\ndef update_review(reviewId):\n    try :",
+        "detail": "cs348-project-backend.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "cs348-project-backend.config",
+        "description": "cs348-project-backend.config",
+        "peekOfCode": "app = Flask(__name__)\nmysql = MySQL()\napp.config['MYSQL_DATABASE_USER'] = 'root'\napp.config['MYSQL_DATABASE_PASSWORD'] = 'Neel1123!'\napp.config['MYSQL_DATABASE_DB'] = 'project1CS348'\napp.config['MYSQL_DATABASE_HOST'] = 'localhost'\nmysql.init_app(app)",
+        "detail": "cs348-project-backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "mysql",
+        "kind": 5,
+        "importPath": "cs348-project-backend.config",
+        "description": "cs348-project-backend.config",
+        "peekOfCode": "mysql = MySQL()\napp.config['MYSQL_DATABASE_USER'] = 'root'\napp.config['MYSQL_DATABASE_PASSWORD'] = 'Neel1123!'\napp.config['MYSQL_DATABASE_DB'] = 'project1CS348'\napp.config['MYSQL_DATABASE_HOST'] = 'localhost'\nmysql.init_app(app)",
+        "detail": "cs348-project-backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_DATABASE_USER']",
+        "kind": 5,
+        "importPath": "cs348-project-backend.config",
+        "description": "cs348-project-backend.config",
+        "peekOfCode": "app.config['MYSQL_DATABASE_USER'] = 'root'\napp.config['MYSQL_DATABASE_PASSWORD'] = 'Neel1123!'\napp.config['MYSQL_DATABASE_DB'] = 'project1CS348'\napp.config['MYSQL_DATABASE_HOST'] = 'localhost'\nmysql.init_app(app)",
+        "detail": "cs348-project-backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_DATABASE_PASSWORD']",
+        "kind": 5,
+        "importPath": "cs348-project-backend.config",
+        "description": "cs348-project-backend.config",
+        "peekOfCode": "app.config['MYSQL_DATABASE_PASSWORD'] = 'Neel1123!'\napp.config['MYSQL_DATABASE_DB'] = 'project1CS348'\napp.config['MYSQL_DATABASE_HOST'] = 'localhost'\nmysql.init_app(app)",
+        "detail": "cs348-project-backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_DATABASE_DB']",
+        "kind": 5,
+        "importPath": "cs348-project-backend.config",
+        "description": "cs348-project-backend.config",
+        "peekOfCode": "app.config['MYSQL_DATABASE_DB'] = 'project1CS348'\napp.config['MYSQL_DATABASE_HOST'] = 'localhost'\nmysql.init_app(app)",
+        "detail": "cs348-project-backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MYSQL_DATABASE_HOST']",
+        "kind": 5,
+        "importPath": "cs348-project-backend.config",
+        "description": "cs348-project-backend.config",
+        "peekOfCode": "app.config['MYSQL_DATABASE_HOST'] = 'localhost'\nmysql.init_app(app)",
+        "detail": "cs348-project-backend.config",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "description": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "description": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "description": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "description": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "def stringify(value):\n    return _stringify(value, separators=(',', ':'))\nassert stringify([None, None]) == '[[null,null]]'\na = []\no = {}\nassert stringify(a) == '[[]]'\nassert stringify(o) == '[{}]'\na.append(a)\no['o'] = o\nassert stringify(a) == '[[\"0\"]]'",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "a",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "a = []\no = {}\nassert stringify(a) == '[[]]'\nassert stringify(o) == '[{}]'\na.append(a)\no['o'] = o\nassert stringify(a) == '[[\"0\"]]'\nassert stringify(o) == '[{\"o\":\"0\"}]'\nb = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o = {}\nassert stringify(a) == '[[]]'\nassert stringify(o) == '[{}]'\na.append(a)\no['o'] = o\nassert stringify(a) == '[[\"0\"]]'\nassert stringify(o) == '[{\"o\":\"0\"}]'\nb = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b\na.append(1)",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['o']",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o['o'] = o\nassert stringify(a) == '[[\"0\"]]'\nassert stringify(o) == '[{\"o\":\"0\"}]'\nb = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b\na.append(1)\na.append('two')\na.append(True)\no['one'] = 1\no['two'] = 'two'",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "b",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "b = parse(stringify(a))\nassert isinstance(b, list) and b[0] == b\na.append(1)\na.append('two')\na.append(True)\no['one'] = 1\no['two'] = 'two'\no['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['one']",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o['one'] = 1\no['two'] = 'two'\no['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'\na.append(o)\no['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['two']",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o['two'] = 'two'\no['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'\na.append(o)\no['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})\na.append([1, 2, 3])",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['three']",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o['three'] = True\nassert stringify(a) == '[[\"0\",1,\"1\",true],\"two\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true},\"two\"]'\na.append(o)\no['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})\na.append([1, 2, 3])\no['test'] = {'test': 'OK'}",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['a']",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o['a'] = a\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\"}]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\"},\"two\",[\"2\",1,\"1\",true,\"0\"]]'\na.append({'test': 'OK'})\na.append([1, 2, 3])\no['test'] = {'test': 'OK'}\no['array'] = [1, 2, 3]\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\",\"3\",\"4\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\",\"test\":\"3\",\"array\":\"4\"},{\"test\":\"5\"},[1,2,3],\"OK\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\",\"test\":\"3\",\"array\":\"4\"},\"two\",[\"2\",1,\"1\",true,\"0\",\"3\",\"4\"],{\"test\":\"5\"},[1,2,3],\"OK\"]'\na2 = parse(stringify(a));",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['test']",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o['test'] = {'test': 'OK'}\no['array'] = [1, 2, 3]\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\",\"3\",\"4\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\",\"test\":\"3\",\"array\":\"4\"},{\"test\":\"5\"},[1,2,3],\"OK\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\",\"test\":\"3\",\"array\":\"4\"},\"two\",[\"2\",1,\"1\",true,\"0\",\"3\",\"4\"],{\"test\":\"5\"},[1,2,3],\"OK\"]'\na2 = parse(stringify(a));\no2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o['array']",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o['array'] = [1, 2, 3]\nassert stringify(a) == '[[\"0\",1,\"1\",true,\"2\",\"3\",\"4\"],\"two\",{\"o\":\"2\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"0\",\"test\":\"3\",\"array\":\"4\"},{\"test\":\"5\"},[1,2,3],\"OK\"]'\nassert stringify(o) == '[{\"o\":\"0\",\"one\":1,\"two\":\"1\",\"three\":true,\"a\":\"2\",\"test\":\"3\",\"array\":\"4\"},\"two\",[\"2\",1,\"1\",true,\"0\",\"3\",\"4\"],{\"test\":\"5\"},[1,2,3],\"OK\"]'\na2 = parse(stringify(a));\no2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']\nstr = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "a2",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "a2 = parse(stringify(a));\no2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']\nstr = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')\nassert str['b']['t']['a'] == 'sup' and str['a'][1]['b'][0]['c'] == str['b']['t']\noo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "o2",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "o2 = parse(stringify(o));\nassert a2[0] == a2\nassert o2['o'] == o2\nassert a2[1] == 1 and a2[2] == 'two' and a2[3] == True and isinstance(a2[4], dict)\nassert a2[4] == a2[4]['o'] and a2 == a2[4]['o']['a']\nstr = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')\nassert str['b']['t']['a'] == 'sup' and str['a'][1]['b'][0]['c'] == str['b']['t']\noo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']\nprint('OK')",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "str",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "str = parse('[{\"prop\":\"1\",\"a\":\"2\",\"b\":\"3\"},{\"value\":123},[\"4\",\"5\"],{\"e\":\"6\",\"t\":\"7\",\"p\":4},{},{\"b\":\"8\"},\"f\",{\"a\":\"9\"},[\"10\"],\"sup\",{\"a\":1,\"d\":2,\"c\":\"7\",\"z\":\"11\",\"h\":1},{\"g\":2,\"a\":\"7\",\"b\":\"12\",\"f\":6},{\"r\":4,\"u\":\"7\",\"c\":5}]')\nassert str['b']['t']['a'] == 'sup' and str['a'][1]['b'][0]['c'] == str['b']['t']\noo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']\nprint('OK')",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    },
+    {
+        "label": "oo",
+        "kind": 5,
+        "importPath": "cs348-project-frontend.node_modules.flatted.python.test",
+        "description": "cs348-project-frontend.node_modules.flatted.python.test",
+        "peekOfCode": "oo = parse('[{\"a\":\"1\",\"b\":\"0\",\"c\":\"2\"},{\"aa\":\"3\"},{\"ca\":\"4\",\"cb\":\"5\",\"cc\":\"6\",\"cd\":\"7\",\"ce\":\"8\",\"cf\":\"9\"},{\"aaa\":\"10\"},{\"caa\":\"4\"},{\"cba\":\"5\"},{\"cca\":\"2\"},{\"cda\":\"4\"},\"value2\",\"value3\",\"value1\"]');\nassert oo['a']['aa']['aaa'] == 'value1' and oo == oo['b'] and oo['c']['ca']['caa'] == oo['c']['ca']\nprint('OK')",
+        "detail": "cs348-project-frontend.node_modules.flatted.python.test",
+        "documentation": {}
+    }
+]

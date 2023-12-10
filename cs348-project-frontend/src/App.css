@@ -1,0 +1,18 @@
+.restaurant-side-nav{
+  background-color: cornflowerblue !important;
+  font-family: Avenir;
+}
+.page{
+  background-color: bisque;
+  font-size: 5rem;
+  text-align: center;
+
+}
+.center{
+  background-color: bisque;
+  padding: 50px 200px;
+}
+
+.center fieldset {
+    margin: 20px 0;
+}
